@@ -24,7 +24,7 @@ namespace swhost
         Dictionary<string, Icon> icons = new Dictionary<string, Icon>();
         bool reloading = false;
         internal bool closing = false;
-        Dictionary<Status, Color> statusColor = new Dictionary<Status,Color>();
+        Dictionary<Status, Color> statusColor = new Dictionary<Status, Color>();
 
         [DllImport("dnsapi.dll", EntryPoint = "DnsFlushResolverCache")]
         private static extern UInt32 DnsFlushResolverCache();
@@ -36,7 +36,10 @@ namespace swhost
             icons.Add("devel", (Icon)resources.GetObject("devel"));
             icons.Add("test", (Icon)resources.GetObject("test"));
             icons.Add("prod", (Icon)resources.GetObject("prod"));
-            icons.Add("mixed", (Icon)resources.GetObject("mixed"));
+            icons.Add("develtest", (Icon)resources.GetObject("mixed"));
+            icons.Add("develprod", (Icon)resources.GetObject("mixed"));
+            icons.Add("testprod", (Icon)resources.GetObject("mixed"));
+            icons.Add("all", (Icon)resources.GetObject("mixed"));
             icons.Add("unknown", (Icon)resources.GetObject("unknown"));
             iconContextMenu.Items["setDevelMenuItem"].Image = icons["devel"].ToBitmap();
             iconContextMenu.Items["setTestMenuItem"].Image = icons["test"].ToBitmap();
@@ -45,7 +48,10 @@ namespace swhost
             statusColor.Add(Status.devel, Color.LightPink);
             statusColor.Add(Status.test, Color.LightBlue);
             statusColor.Add(Status.prod, Color.LightGreen);
-            statusColor.Add(Status.mixed, Color.LightYellow);
+            statusColor.Add(Status.develtest, Color.LightYellow);
+            statusColor.Add(Status.develprod, Color.LightYellow);
+            statusColor.Add(Status.testprod, Color.LightYellow);
+            statusColor.Add(Status.all, Color.LightYellow);
             statusColor.Add(Status.unknown, Color.LightGray);
             hostsFile = new HostsFile(Environment.GetFolderPath(Environment.SpecialFolder.System) + @"\drivers\etc\hosts");
             LoadSettings();
@@ -84,6 +90,7 @@ namespace swhost
                         ListViewItem item = new ListViewItem(alias.ListViewSubItems);
                         item.Tag = alias;
                         item.BackColor = statusColor[alias.Status];
+                        item.Font = new Font(aliasLb.Font, alias.Disabled ? FontStyle.Strikeout : FontStyle.Regular);
                         aliasLb.Items.Add(item);
                     }
                 }
@@ -152,15 +159,16 @@ namespace swhost
                 testIPtxt.Enabled = true;
                 prodIPtxt.Enabled = true;
                 statusCb.Enabled = true;
+                disableMenuItem.Text = aliasLb.FocusedItem.Font.Strikeout ? "&enable" : "d&isable";
             }
         }
 
         internal bool Editing
         {
-            get { return applyBut.Enabled; }
+            get { return commitBut.Enabled; }
             set
             {
-                applyBut.Enabled = value;
+                commitBut.Enabled = value;
                 cancelBut.Text = value ? "cancel" : "hide";
             }
         }
@@ -222,7 +230,7 @@ namespace swhost
             {
                 lock (hostsFile)
                 {
-                    Alias alias = new Alias(dnstxt.Text, statusCb.SelectedIndex == 0 ? develIPtxt.Text : statusCb.SelectedIndex == 1 ? testIPtxt.Text : prodIPtxt.Text, develIPtxt.Text, testIPtxt.Text, prodIPtxt.Text, hostsFile.Lines.Count);
+                    Alias alias = new Alias(dnstxt.Text, statusCb.SelectedIndex == 0 ? develIPtxt.Text : statusCb.SelectedIndex == 1 ? testIPtxt.Text : prodIPtxt.Text, develIPtxt.Text, testIPtxt.Text, prodIPtxt.Text, hostsFile.Lines.Count, false);
                     hostsFile.Aliases.Add(alias);
                     hostsFile.Lines.Add(alias.Line);
                     ListViewItem item = new ListViewItem(alias.ListViewSubItems);
@@ -263,7 +271,7 @@ namespace swhost
             dnstxt.Focus();
         }
 
-        private void applybut_Click(object sender, EventArgs e)
+        private void commitbut_Click(object sender, EventArgs e)
         {
             Editing = false;
             SaveSettings();
@@ -334,6 +342,21 @@ namespace swhost
                 Alias alias = (Alias)item.Tag;
                 alias.Deleted = true;
                 item.Remove();
+                ClearFields();
+                Editing = true;
+            }
+        }
+
+        private void disableMenuItem_Click(object sender, EventArgs e)
+        {
+            if (aliasLb.SelectedItems.Count > 0)
+            {
+                ListViewItem item = aliasLb.SelectedItems[0];
+                Alias alias = (Alias)item.Tag;
+                alias.Disabled = !alias.Disabled;
+                item.BackColor = statusColor[alias.Status];
+                item.Font = new Font(aliasLb.Font, alias.Disabled ? FontStyle.Strikeout : FontStyle.Regular);
+                disableMenuItem.Text = alias.Disabled ? "&enable" : "d&isable";
                 ClearFields();
                 Editing = true;
             }

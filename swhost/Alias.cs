@@ -6,20 +6,21 @@ using System.Text.RegularExpressions;
 
 namespace swhost
 {
-    internal enum Status { unknown = 0, devel = 1, test = 2, prod = 3, mixed = 4 };
+    internal enum Status { unknown = 0, devel = 1, test = 2, prod = 4, develtest = devel | test, develprod = devel | prod, testprod = test | prod, all = devel | test | prod };
     internal class Alias
     {
         #region statics
-        public static Regex AliasRegex = new Regex(@"^[\s\t]*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]+([^\s\t]+?)[\s\t]*#[\s\t]*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;[\s\t]*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;[\s\t]*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        public static Regex AliasRegex = new Regex(@"^[\s\t]*(?<disabled>#?)[\s\t]*(?<currIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]+(?<dns>[^\s\t]+?)[\s\t]*(?:#[\s\t]*(?:(?<develIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;)?[\s\t]*(?:(?<testIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;)?[\s\t]*(?<prodIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?)?[\s\t]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
         public static Alias GetInstance(string line, int lineNumber)
         {
             Match m = AliasRegex.Match(line);
-            string currIp = m.Groups[1].Value;
-            string dns = m.Groups[2].Value;
-            string develIp = m.Groups[3].Value;
-            string testIp = m.Groups[4].Value;
-            string prodIp = m.Groups[5].Value;
-            return m.Success ? new Alias(dns, currIp, develIp, testIp, prodIp, lineNumber) : null;
+            bool disabled = m.Groups["disabled"].Value == "#";
+            string currIp = m.Groups["currIp"].Value;
+            string dns = m.Groups["dns"].Value;
+            string develIp = m.Groups["develIp"].Value;
+            string testIp = m.Groups["testIp"].Value;
+            string prodIp = m.Groups["prodIp"].Value;
+            return m.Success ? new Alias(dns, currIp, develIp, testIp, prodIp, lineNumber, disabled) : null;
         }
         #endregion
 
@@ -30,8 +31,9 @@ namespace swhost
         private string prodIp;
         private int lineNumber;
         private bool deleted;
+        private bool disabled;
 
-        public Alias(string dns, string currIp, string develIp, string testIp, string prodIp, int lineNumber)
+        public Alias(string dns, string currIp, string develIp, string testIp, string prodIp, int lineNumber, bool disabled)
         {
             this.dns = dns;
             this.currIp = currIp;
@@ -40,6 +42,13 @@ namespace swhost
             this.prodIp = prodIp;
             this.lineNumber = lineNumber;
             this.deleted = false;
+            this.disabled = disabled;
+        }
+
+        public bool Disabled
+        {
+            get { return disabled; }
+            set { disabled = value; }
         }
 
         public string Dns
@@ -87,7 +96,11 @@ namespace swhost
         public Status Status
         {
             get { return currIp == develIp ? Status.devel : currIp == testIp ? Status.test : currIp == prodIp ? Status.prod : Status.unknown; }
-            set { currIp = value == Status.devel ? develIp : value == Status.test ? testIp : prodIp; }
+            set
+            {
+                if (!String.IsNullOrWhiteSpace(develIp) || !String.IsNullOrWhiteSpace(testIp) || !String.IsNullOrWhiteSpace(prodIp))
+                    currIp = value == Status.devel ? develIp : value == Status.test ? testIp : prodIp;
+            }
         }
 
         public string[] ListViewSubItems
@@ -97,7 +110,7 @@ namespace swhost
 
         public string Line
         {
-            get { return String.Format("{0}{1}#{2};{3};{4}", (Status == Status.devel ? develIp : Status == Status.test ? testIp : Status == Status.prod ? prodIp : "").PadRight(23), dns.PadRight(40), develIp, testIp, prodIp); }
+            get { return String.Format("{0}{1}{2}#{3};{4};{5}", disabled ? "#" : "", currIp.PadRight(disabled ? 22 : 23), dns.PadRight(50), develIp, testIp, prodIp); }
         }
     }
 }

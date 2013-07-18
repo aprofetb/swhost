@@ -52,6 +52,7 @@ namespace swhost
             this.statusCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.aliasContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disableMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.develIPtxt = new System.Windows.Forms.TextBox();
             this.prodIPtxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -59,7 +60,7 @@ namespace swhost
             this.label3 = new System.Windows.Forms.Label();
             this.dnstxt = new System.Windows.Forms.TextBox();
             this.okBut = new System.Windows.Forms.Button();
-            this.applyBut = new System.Windows.Forms.Button();
+            this.commitBut = new System.Windows.Forms.Button();
             this.cancelBut = new System.Windows.Forms.Button();
             this.newBut = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -96,70 +97,70 @@ namespace swhost
             this.exitMenuItem});
             this.iconContextMenu.Name = "contextMenu";
             this.iconContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.iconContextMenu.Size = new System.Drawing.Size(153, 198);
+            this.iconContextMenu.Size = new System.Drawing.Size(145, 176);
             // 
             // settingsMenuItem
             // 
             this.settingsMenuItem.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.settingsMenuItem.Name = "settingsMenuItem";
-            this.settingsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsMenuItem.Size = new System.Drawing.Size(144, 22);
             this.settingsMenuItem.Text = "settings";
             this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
             // 
             // openHostsMenuItem
             // 
             this.openHostsMenuItem.Name = "openHostsMenuItem";
-            this.openHostsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openHostsMenuItem.Size = new System.Drawing.Size(144, 22);
             this.openHostsMenuItem.Text = "open hosts file";
             this.openHostsMenuItem.Click += new System.EventHandler(this.openHostsMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(141, 6);
             // 
             // setDevelMenuItem
             // 
             this.setDevelMenuItem.Name = "setDevelMenuItem";
-            this.setDevelMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.setDevelMenuItem.Size = new System.Drawing.Size(144, 22);
             this.setDevelMenuItem.Text = "devel";
             this.setDevelMenuItem.Click += new System.EventHandler(this.setMenuItem_Click);
             // 
             // setTestMenuItem
             // 
             this.setTestMenuItem.Name = "setTestMenuItem";
-            this.setTestMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.setTestMenuItem.Size = new System.Drawing.Size(144, 22);
             this.setTestMenuItem.Text = "test";
             this.setTestMenuItem.Click += new System.EventHandler(this.setMenuItem_Click);
             // 
             // setProdMenuItem
             // 
             this.setProdMenuItem.Name = "setProdMenuItem";
-            this.setProdMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.setProdMenuItem.Size = new System.Drawing.Size(144, 22);
             this.setProdMenuItem.Text = "prod";
             this.setProdMenuItem.Click += new System.EventHandler(this.setMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
             // aboutMenuItem
             // 
             this.aboutMenuItem.Name = "aboutMenuItem";
-            this.aboutMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutMenuItem.Size = new System.Drawing.Size(144, 22);
             this.aboutMenuItem.Text = "about";
             this.aboutMenuItem.Click += new System.EventHandler(this.about_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(141, 6);
             // 
             // exitMenuItem
             // 
             this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitMenuItem.Size = new System.Drawing.Size(144, 22);
             this.exitMenuItem.Text = "exit";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
@@ -213,18 +214,26 @@ namespace swhost
             // aliasContextMenu
             // 
             this.aliasContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteMenuItem});
+            this.deleteMenuItem,
+            this.disableMenuItem});
             this.aliasContextMenu.Name = "aliasContextMenu";
             this.aliasContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.aliasContextMenu.ShowImageMargin = false;
-            this.aliasContextMenu.Size = new System.Drawing.Size(80, 26);
+            this.aliasContextMenu.Size = new System.Drawing.Size(128, 70);
             // 
             // deleteMenuItem
             // 
             this.deleteMenuItem.Name = "deleteMenuItem";
-            this.deleteMenuItem.Size = new System.Drawing.Size(79, 22);
-            this.deleteMenuItem.Text = "delete";
+            this.deleteMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.deleteMenuItem.Text = "&delete";
             this.deleteMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
+            // 
+            // disableMenuItem
+            // 
+            this.disableMenuItem.Name = "disableMenuItem";
+            this.disableMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.disableMenuItem.Text = "d&isable";
+            this.disableMenuItem.Click += new System.EventHandler(this.disableMenuItem_Click);
             // 
             // develIPtxt
             // 
@@ -283,21 +292,21 @@ namespace swhost
             this.okBut.Name = "okBut";
             this.okBut.Size = new System.Drawing.Size(42, 21);
             this.okBut.TabIndex = 7;
-            this.okBut.Text = "ok";
+            this.okBut.Text = "&ok";
             this.okBut.UseVisualStyleBackColor = true;
             this.okBut.Click += new System.EventHandler(this.okbut_Click);
             // 
-            // applyBut
+            // commitBut
             // 
-            this.applyBut.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.applyBut.Enabled = false;
-            this.applyBut.Location = new System.Drawing.Point(272, 368);
-            this.applyBut.Name = "applyBut";
-            this.applyBut.Size = new System.Drawing.Size(75, 23);
-            this.applyBut.TabIndex = 9;
-            this.applyBut.Text = "apply";
-            this.applyBut.UseVisualStyleBackColor = true;
-            this.applyBut.Click += new System.EventHandler(this.applybut_Click);
+            this.commitBut.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.commitBut.Enabled = false;
+            this.commitBut.Location = new System.Drawing.Point(272, 368);
+            this.commitBut.Name = "commitBut";
+            this.commitBut.Size = new System.Drawing.Size(75, 23);
+            this.commitBut.TabIndex = 9;
+            this.commitBut.Text = "&commit";
+            this.commitBut.UseVisualStyleBackColor = true;
+            this.commitBut.Click += new System.EventHandler(this.commitbut_Click);
             // 
             // cancelBut
             // 
@@ -306,7 +315,7 @@ namespace swhost
             this.cancelBut.Name = "cancelBut";
             this.cancelBut.Size = new System.Drawing.Size(75, 23);
             this.cancelBut.TabIndex = 10;
-            this.cancelBut.Text = "hide";
+            this.cancelBut.Text = "&hide";
             this.cancelBut.UseVisualStyleBackColor = true;
             this.cancelBut.Click += new System.EventHandler(this.cancelbut_Click);
             // 
@@ -316,7 +325,7 @@ namespace swhost
             this.newBut.Name = "newBut";
             this.newBut.Size = new System.Drawing.Size(42, 21);
             this.newBut.TabIndex = 1;
-            this.newBut.Text = "new";
+            this.newBut.Text = "&new";
             this.newBut.UseVisualStyleBackColor = true;
             this.newBut.Click += new System.EventHandler(this.newbut_Click);
             // 
@@ -355,7 +364,7 @@ namespace swhost
             this.runAtStartupCk.Name = "runAtStartupCk";
             this.runAtStartupCk.Size = new System.Drawing.Size(123, 17);
             this.runAtStartupCk.TabIndex = 8;
-            this.runAtStartupCk.Text = "run at system startup";
+            this.runAtStartupCk.Text = "&run at system startup";
             this.runAtStartupCk.UseVisualStyleBackColor = true;
             this.runAtStartupCk.Click += new System.EventHandler(this.runAtStartupCk_Click);
             // 
@@ -401,7 +410,7 @@ namespace swhost
             // 
             // SettingsForm
             // 
-            this.AcceptButton = this.applyBut;
+            this.AcceptButton = this.commitBut;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBut;
@@ -412,7 +421,7 @@ namespace swhost
             this.Controls.Add(this.runAtStartupCk);
             this.Controls.Add(this.newBut);
             this.Controls.Add(this.cancelBut);
-            this.Controls.Add(this.applyBut);
+            this.Controls.Add(this.commitBut);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.statusCb);
             this.Controls.Add(this.label4);
@@ -453,7 +462,7 @@ namespace swhost
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox dnstxt;
         private System.Windows.Forms.Button okBut;
-        private System.Windows.Forms.Button applyBut;
+        private System.Windows.Forms.Button commitBut;
         private System.Windows.Forms.Button cancelBut;
         private System.Windows.Forms.Button newBut;
         private System.Windows.Forms.ContextMenuStrip iconContextMenu;
@@ -479,6 +488,7 @@ namespace swhost
         private Label label5;
         private TextBox testIPtxt;
         private ColumnHeader testIpCol;
+        private ToolStripMenuItem disableMenuItem;
     }
 }
 
