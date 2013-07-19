@@ -10,7 +10,7 @@ namespace swhost
     internal class Alias
     {
         #region statics
-        public static Regex AliasRegex = new Regex(@"^[\s\t]*(?<disabled>#?)[\s\t]*(?<currIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]+(?<dns>[^\s\t]+?)[\s\t]*(?:#[\s\t]*(?:(?<develIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;)?[\s\t]*(?:(?<testIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;)?[\s\t]*(?<prodIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?)?[\s\t]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        public static Regex AliasRegex = new Regex(@"^[\s\t]*(?<disabled>#*)[\s\t]*(?<currIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]+(?<dns>[^\s\t]+?)[\s\t]*(?:#[\s\t]*(?:(?<develIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;)?[\s\t]*(?:(?<testIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;)?[\s\t]*(?<prodIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?)?[\s\t]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
         public static Alias GetInstance(string line, int lineNumber)
         {
             Match m = AliasRegex.Match(line);
