@@ -51,8 +51,8 @@ namespace swhost
             this.prodIpCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.aliasContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.deleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.develIPtxt = new System.Windows.Forms.TextBox();
             this.prodIPtxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -174,7 +174,7 @@ namespace swhost
             this.prodIpCol,
             this.statusCol});
             this.aliasLb.ContextMenuStrip = this.aliasContextMenu;
-            this.aliasLb.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLb.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLb.FullRowSelect = true;
             this.aliasLb.GridLines = true;
             this.aliasLb.Location = new System.Drawing.Point(12, 7);
@@ -219,36 +219,36 @@ namespace swhost
             this.aliasContextMenu.Name = "aliasContextMenu";
             this.aliasContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.aliasContextMenu.ShowImageMargin = false;
-            this.aliasContextMenu.Size = new System.Drawing.Size(128, 70);
-            // 
-            // deleteMenuItem
-            // 
-            this.deleteMenuItem.Name = "deleteMenuItem";
-            this.deleteMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.deleteMenuItem.Text = "&delete";
-            this.deleteMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
+            this.aliasContextMenu.Size = new System.Drawing.Size(83, 48);
             // 
             // disableMenuItem
             // 
             this.disableMenuItem.Name = "disableMenuItem";
-            this.disableMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.disableMenuItem.Size = new System.Drawing.Size(82, 22);
             this.disableMenuItem.Text = "d&isable";
             this.disableMenuItem.Click += new System.EventHandler(this.disableMenuItem_Click);
             // 
+            // deleteMenuItem
+            // 
+            this.deleteMenuItem.Name = "deleteMenuItem";
+            this.deleteMenuItem.Size = new System.Drawing.Size(82, 22);
+            this.deleteMenuItem.Text = "&delete";
+            this.deleteMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
+            // 
             // develIPtxt
             // 
-            this.develIPtxt.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.develIPtxt.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.develIPtxt.Location = new System.Drawing.Point(215, 314);
             this.develIPtxt.Name = "develIPtxt";
-            this.develIPtxt.Size = new System.Drawing.Size(132, 21);
+            this.develIPtxt.Size = new System.Drawing.Size(132, 22);
             this.develIPtxt.TabIndex = 3;
             // 
             // prodIPtxt
             // 
-            this.prodIPtxt.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prodIPtxt.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.prodIPtxt.Location = new System.Drawing.Point(491, 314);
             this.prodIPtxt.Name = "prodIPtxt";
-            this.prodIPtxt.Size = new System.Drawing.Size(119, 21);
+            this.prodIPtxt.Size = new System.Drawing.Size(119, 22);
             this.prodIPtxt.TabIndex = 5;
             // 
             // label1
@@ -280,10 +280,10 @@ namespace swhost
             // 
             // dnstxt
             // 
-            this.dnstxt.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dnstxt.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dnstxt.Location = new System.Drawing.Point(60, 314);
             this.dnstxt.Name = "dnstxt";
-            this.dnstxt.Size = new System.Drawing.Size(149, 21);
+            this.dnstxt.Size = new System.Drawing.Size(149, 22);
             this.dnstxt.TabIndex = 2;
             // 
             // okBut
@@ -341,6 +341,7 @@ namespace swhost
             // statusCb
             // 
             this.statusCb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.statusCb.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusCb.FormattingEnabled = true;
             this.statusCb.Items.AddRange(new object[] {
             "devel",
@@ -348,7 +349,7 @@ namespace swhost
             "prod"});
             this.statusCb.Location = new System.Drawing.Point(616, 314);
             this.statusCb.Name = "statusCb";
-            this.statusCb.Size = new System.Drawing.Size(95, 21);
+            this.statusCb.Size = new System.Drawing.Size(95, 22);
             this.statusCb.TabIndex = 6;
             // 
             // fsWatcher
@@ -402,10 +403,10 @@ namespace swhost
             // 
             // testIPtxt
             // 
-            this.testIPtxt.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.testIPtxt.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.testIPtxt.Location = new System.Drawing.Point(353, 314);
             this.testIPtxt.Name = "testIPtxt";
-            this.testIPtxt.Size = new System.Drawing.Size(132, 21);
+            this.testIPtxt.Size = new System.Drawing.Size(132, 22);
             this.testIPtxt.TabIndex = 4;
             // 
             // SettingsForm
