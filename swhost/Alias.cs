@@ -10,7 +10,7 @@ namespace swhost
     internal class Alias
     {
         #region statics
-        public static Regex AliasRegex = new Regex(@"^[\s\t]*(?<disabled>#*)[\s\t]*(?<currIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]+(?<dns>[^\s\t]+?)[\s\t]*(?:#[\s\t]*(?:(?<develIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;)?[\s\t]*(?:(?<testIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?[\s\t]*;)?[\s\t]*(?<prodIp>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?)?[\s\t]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        public static Regex AliasRegex = new Regex(@"^[\s\t]*(?<disabled>#*)[\s\t]*(?<currIp>(?:(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))?[\s\t]+(?<dns>(?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*(?:[A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])?)[\s\t]*(?:#[\s\t]*(?:(?<develIp>(?:(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))?[\s\t]*;)?[\s\t]*(?:(?<testIp>(?:(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))?[\s\t]*;)?[\s\t]*(?<prodIp>(?:(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))?)?[\s\t]*$", RegexOptions.Compiled | RegexOptions.Singleline);
         public static Alias GetInstance(string line, int lineNumber)
         {
             Match m = AliasRegex.Match(line);
@@ -110,7 +110,7 @@ namespace swhost
 
         public string Line
         {
-            get { return String.Format("{0}{1}{2}#{3};{4};{5}", disabled ? "#" : "", currIp.PadRight(disabled ? 22 : 23), dns.PadRight(50), develIp, testIp, prodIp); }
+            get { return String.Format("{0}{1}{2} #{3};{4};{5}", disabled ? "#" : "", currIp.PadRight(disabled ? 18 : 19), dns.PadRight(49), develIp, testIp, prodIp); }
         }
     }
 }

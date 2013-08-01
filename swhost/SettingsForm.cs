@@ -20,7 +20,8 @@ namespace swhost
     public partial class SettingsForm : Form
     {
         HostsFile hostsFile;
-        Regex ipRE = new Regex(@"^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?$", RegexOptions.Compiled | RegexOptions.Singleline);
+        Regex ipRE = new Regex(@"^((?:(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))?$", RegexOptions.Compiled | RegexOptions.Singleline);
+        Regex dnsRE = new Regex(@"^(?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*(?:[A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$", RegexOptions.Compiled | RegexOptions.Singleline);
         Dictionary<string, Icon> icons = new Dictionary<string, Icon>();
         bool reloading = false;
         internal bool closing = false;
@@ -175,13 +176,14 @@ namespace swhost
 
         private void okbut_Click(object sender, EventArgs e)
         {
-            if (dnstxt.Text.Length == 0)
+            Match m = dnsRE.Match(dnstxt.Text);
+            if (!m.Success)
             {
-                MessageBox.Show(this, "The field 'dns' cannot be null", "swhost - error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "The field 'dns' is not valid (see RFC 1123)", "swhost - error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dnstxt.Focus();
                 return;
             }
-            Match m = ipRE.Match(develIPtxt.Text);
+            m = ipRE.Match(develIPtxt.Text);
             if (!m.Success)
             {
                 MessageBox.Show(this, "The field 'devel' must be an ip address", "swhost - error", MessageBoxButtons.OK, MessageBoxIcon.Error);
